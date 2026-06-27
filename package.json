@@ -3,17 +3,17 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
+    "build": "nest build",
+    "prebuild": "rimraf dist",
     "docker:up": "docker-compose up -d",
     "docker:down": "docker-compose down",
-    "docker:logs": "docker-compose logs -f postgres",
-    "docker:ps": "docker-compose ps",
     "start": "node dist/main.js",
     "start:dev": "nest start --watch",
-    "build": "tsc -p tsconfig.build.json",
     "format": "prettier --write \"src/**/*.ts\"",
-    "migration:generate": "npx tsx ./node_modules/typeorm/cli.js migration:generate -d src/config/migration.config.ts",
-    "migration:run": "npx tsx ./node_modules/typeorm/cli.js migration:run -d src/config/migration.config.ts",
-    "migration:revert": "npx tsx ./node_modules/typeorm/cli.js migration:revert -d src/config/migration.config.ts",
+    "typeorm": "npx tsx ./node_modules/typeorm/cli.js -d src/config/migration.config.ts",
+    "migration:generate": "npm run typeorm -- migration:generate src/migrations/$npm_config_name",
+    "migration:run": "npm run typeorm -- migration:run",
+    "migration:revert": "npm run typeorm -- migration:revert",
     "graphql:generate": "npx tsx src/config/graphql.config.ts"
   },
   "dependencies": {

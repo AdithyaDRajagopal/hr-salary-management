@@ -46,7 +46,7 @@ npm run migration:run
 Generate a new migration:
 
 ```bash
-npm run migration:generate -- -n MigrationName
+npm run migration:generate --name=MigrationName
 ```
 
 Revert the last migration:

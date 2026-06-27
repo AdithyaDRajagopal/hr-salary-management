@@ -13,6 +13,6 @@ export default new DataSource({
   password: process.env.DB_PASSWORD || 'postgres',
   database: process.env.DB_DATABASE || 'hr_salary_management',
   entities: [path.join(__dirname, '../**/*.entity{.ts,.js}')],
-  migrations: [path.join(__dirname, '../migrations/*{.ts,.js}')],
+  migrations: ['dist/migrations/*{.ts,.js}'],
   synchronize: false,
 });
