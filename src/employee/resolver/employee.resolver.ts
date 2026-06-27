@@ -22,16 +22,16 @@ export class EmployeeResolver {
 
   @Mutation(() => Employee)
   async createEmployee(@Args('input') input: CreateEmployeeInput): Promise<Employee> {
-    return this.employeeService.create(input);
+    return this.employeeService.createEmployee(input);
   }
 
   @Mutation(() => Employee)
   async updateEmployee(@Args('id') id: string, @Args('input') input: UpdateEmployeeInput): Promise<Employee> {
-    return this.employeeService.update(id, input);
+    return this.employeeService.updateEmployee(id, input);
   }
 
   @Mutation(() => Employee)
   async deleteEmployee(@Args('id') id: string): Promise<Employee> {
-    return this.employeeService.remove(id);
+    return this.employeeService.deleteEmployee(id);
   }
 }

@@ -22,7 +22,7 @@ export class EmployeeService {
     return employee;
   }
 
-  async create(input: CreateEmployeeInput): Promise<Employee> {
+  async createEmployee(input: CreateEmployeeInput): Promise<Employee> {
     return this.employeeRepository.create({
       firstName: input.firstName,
       lastName: input.lastName,
@@ -36,7 +36,7 @@ export class EmployeeService {
     });
   }
 
-  async update(id: string, input: UpdateEmployeeInput): Promise<Employee> {
+  async updateEmployee(id: string, input: UpdateEmployeeInput): Promise<Employee> {
     await this.findOne(id);
     const updated = await this.employeeRepository.update(id, input);
     if (!updated) {
@@ -45,9 +45,7 @@ export class EmployeeService {
     return updated;
   }
 
-  async remove(id: string): Promise<Employee> {
-    const employee = await this.findOne(id);
-    await this.employeeRepository.delete(id);
-    return employee;
+  async deleteEmployee(id: string): Promise<Employee> {
+    return this.updateEmployee(id, { isActive: false });
   }
 }
