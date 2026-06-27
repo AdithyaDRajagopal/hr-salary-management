@@ -9,8 +9,8 @@ export class EmployeeResolver {
 
   @Query(() => [Employee])
   async getAllEmployees(
-    @Args('filter') filter?: EmployeeFilterInput,
-    @Args('pagination') pagination?: PaginationInput,
+    @Args('filter', { nullable: true }) filter?: EmployeeFilterInput,
+    @Args('pagination', { nullable: true }) pagination?: PaginationInput,
   ): Promise<Employee[]> {
     return this.employeeService.getAllEmployees(filter, pagination);
   }

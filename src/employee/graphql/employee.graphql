@@ -48,6 +48,6 @@ type Query {
 
 type Mutation {
     createEmployee(input: CreateEmployeeInput!): Employee
-    updateEmployee(id: ID!, input: EmployeeInput!): Employee
+    updateEmployee(id: ID!, input: UpdateEmployeeInput!): Employee
     deleteEmployee(id: ID!): Employee
 }
