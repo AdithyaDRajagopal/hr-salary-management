@@ -1,11 +1,53 @@
 type Employee {
-    id: ID!
-    name: String!
+    id: ID
+    firstName: String
+    lastName: String
+    email: String
+    country: String
+    department: String
+    salary: Float
+    currency: String
+    startDate: String
+    isActive: Boolean
+}
+
+input EmployeeFilter {
+    department: String
+    country: String
+    isActive: Boolean
+}
+
+input CreateEmployeeInput {
+    firstName: String!
+    lastName: String!
     email: String!
-    position: String!
+    country: String!
+    department: String!
     salary: Float!
+    currency: String!
+    startDate: String!
+    isActive: Boolean
+}
+
+input UpdateEmployeeInput {
+    firstName: String
+    lastName: String
+    email: String
+    country: String
+    department: String
+    salary: Float
+    currency: String
+    startDate: String
+    isActive: Boolean
 }
 
 type Query {
-    getAllEmployees: [Employee!]!
+    getAllEmployees(filter: EmployeeFilter, pagination: PaginationInput): [Employee]
+    getEmployeeById(id: ID!): Employee
+}
+
+type Mutation {
+    createEmployee(input: CreateEmployeeInput!): Employee
+    updateEmployee(id: ID!, input: EmployeeInput!): Employee
+    deleteEmployee(id: ID!): Employee
 }
