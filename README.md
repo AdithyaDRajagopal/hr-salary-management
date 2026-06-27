@@ -65,7 +65,23 @@ npm run graphql:generate
 
 This will write the generated types to `src/schema/graphql.schema.ts`.
 
-## 6. Run the application
+## 6. Seed test data
+
+A Faker-based seed script is available to generate sample employee data.
+
+```bash
+npm run seed:employees
+```
+
+This will create 10,000 employees in the database with:
+
+- weighted country distribution across `US`, `UK`, `India`, and `Australia`
+- salaries between `30000` and `200000`
+- random departments, currencies, start dates, and active status
+
+If you want to seed a different amount, edit `scripts/seed-employees.ts` or add a custom script parameter.
+
+## 7. Run the application
 
 ```bash
 npm run start:dev
