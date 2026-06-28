@@ -55,17 +55,9 @@ Revert the last migration:
 npm run migration:revert
 ```
 
-## 5. Generate GraphQL schema types
-
-To generate TypeScript definitions from the GraphQL schema files (`src/**/graphql/*.graphql`):
-
-```bash
-npm run graphql:generate
-```
-
 This will write the generated types to `src/schema/graphql.schema.ts`.
 
-## 6. Seed test data
+## 5. Seed test data
 
 A Faker-based seed script is available to generate sample employee data.
 
@@ -81,7 +73,7 @@ This will create 10,000 employees in the database with:
 
 If you want to seed a different amount, edit `scripts/seed-employees.ts` or add a custom script parameter.
 
-## 7. Run the application
+## 6. Run the application
 
 ```bash
 npm run start:dev

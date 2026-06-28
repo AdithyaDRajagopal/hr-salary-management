@@ -14,7 +14,6 @@
     "migration:generate": "npm run typeorm -- migration:generate src/migrations/$npm_config_name",
     "migration:run": "npm run typeorm -- migration:run",
     "migration:revert": "npm run typeorm -- migration:revert",
-    "graphql:generate": "npx tsx src/config/graphql.config.ts",
     "seed:employees": "npx tsx scripts/seed-employees.ts"
   },
   "dependencies": {
