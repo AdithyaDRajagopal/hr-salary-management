@@ -7,15 +7,23 @@
 /* tslint:disable */
 /* eslint-disable */
 
+export enum SortOrder {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 export class PaginationInput {
   limit?: Nullable<number>;
   offset?: Nullable<number>;
+  sortBy?: Nullable<string>;
+  sortOrder?: Nullable<SortOrder>;
 }
 
 export class EmployeeFilter {
   department?: Nullable<string>;
   country?: Nullable<string>;
   isActive?: Nullable<boolean>;
+  search?: Nullable<string>;
 }
 
 export class CreateEmployeeInput {
@@ -59,7 +67,7 @@ export class Employee {
 
 export class GetAllEmployeesResponse {
   data?: Nullable<Nullable<Employee>[]>;
-  totalCount?: Nullable<number>;
+  total?: Nullable<number>;
 }
 
 export abstract class IQuery {

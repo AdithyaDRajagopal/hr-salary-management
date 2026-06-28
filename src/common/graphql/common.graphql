@@ -1,6 +1,13 @@
 scalar Date
 
+enum SortOrder {
+    ASC
+    DESC
+}
+
 input PaginationInput {
     limit: Int
     offset: Int
+    sortBy: String
+    sortOrder: SortOrder
 }

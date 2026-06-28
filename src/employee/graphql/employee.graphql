@@ -15,6 +15,7 @@ input EmployeeFilter {
     department: String
     country: String
     isActive: Boolean
+    search: String
 }
 
 input CreateEmployeeInput {
@@ -45,7 +46,7 @@ input UpdateEmployeeInput {
 
 type GetAllEmployeesResponse {
     data: [Employee]
-    totalCount: Int
+    total: Int
 }
 
 type Query {

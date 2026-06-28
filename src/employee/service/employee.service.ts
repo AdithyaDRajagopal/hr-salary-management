@@ -17,8 +17,11 @@ export class EmployeeService {
     filter?: EmployeeFilterInput,
     pagination?: PaginationInput,
   ): Promise<GetAllEmployeesResponse> {
-    const data = await this.employeeRepository.findAll(filter, pagination);
-    return { data };
+    const [data, total] = await this.employeeRepository.findAll(
+      filter,
+      pagination,
+    );
+    return { data, total };
   }
 
   async findOne(id: string): Promise<Employee> {

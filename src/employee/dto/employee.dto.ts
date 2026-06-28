@@ -43,6 +43,9 @@ export class Employee {
 export class GetAllEmployeesResponse {
   @Field(() => [Employee])
   data: Employee[];
+
+  @Field(() => Number)
+  total: number;
 }
 
 @InputType()
@@ -112,4 +115,10 @@ export class EmployeeFilterInput {
 
   @Field({ nullable: true })
   department?: string;
+
+  @Field({ nullable: true })
+  isActive?: boolean;
+
+  @Field({ nullable: true })
+  search?: string;
 }

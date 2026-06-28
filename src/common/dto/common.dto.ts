@@ -7,4 +7,10 @@ export class PaginationInput {
 
   @Field({ nullable: true })
   offset?: number;
+
+  @Field({ nullable: true })
+  sortBy?: string;
+
+  @Field({ nullable: true })
+  sortOrder?: "ASC" | "DESC";
 }
