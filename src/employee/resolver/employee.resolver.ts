@@ -2,6 +2,7 @@ import { Args, ID, Mutation, Query, Resolver } from "@nestjs/graphql";
 import { EmployeeService } from "../service/employee.service";
 import {
   CreateEmployeeInput,
+  DashboardData,
   Employee,
   EmployeeFilterInput,
   GetAllEmployeesResponse,
@@ -24,6 +25,11 @@ export class EmployeeResolver {
   @Query(() => Employee)
   async getEmployeeById(@Args("id") id: string): Promise<Employee> {
     return this.employeeService.findOne(id);
+  }
+
+  @Query(() => DashboardData)
+  async dashboard(): Promise<DashboardData> {
+    return this.employeeService.getDashboard();
   }
 
   @Mutation(() => Employee)

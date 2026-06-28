@@ -63,4 +63,102 @@ export class EmployeeRepository {
     await this.repository.update(id, employee);
     return this.findById(id);
   }
+
+  async getDashboardData(): Promise<{
+    totalEmployees: number;
+    activeEmployees: number;
+    inactiveEmployees: number;
+    totalPayroll: number;
+    salaryStats: {
+      average: number;
+      median: number;
+      min: number;
+      max: number;
+      total: number;
+      count: number;
+    };
+    byCountry: {
+      country: string;
+      count: number;
+      averageSalary: number;
+      totalSalary: number;
+    }[];
+    byDepartment: {
+      department: string;
+      count: number;
+      averageSalary: number;
+      totalSalary: number;
+    }[];
+    topEarners: Employee[];
+  }> {
+    const totalEmployees = await this.repository.count();
+    const activeEmployees = await this.repository.count({ where: { isActive: true } });
+    const inactiveEmployees = await this.repository.count({ where: { isActive: false } });
+
+    const statsRaw = await this.repository
+      .createQueryBuilder("employee")
+      .select("AVG(employee.salary)", "average")
+      .addSelect("MIN(employee.salary)", "min")
+      .addSelect("MAX(employee.salary)", "max")
+      .addSelect("SUM(employee.salary)", "total")
+      .addSelect("COUNT(employee.id)", "count")
+      .addSelect(
+        "percentile_cont(0.5) WITHIN GROUP (ORDER BY employee.salary)",
+        "median",
+      )
+      .getRawOne();
+
+    const byCountryRaw = await this.repository
+      .createQueryBuilder("employee")
+      .select("employee.country", "country")
+      .addSelect("COUNT(employee.id)", "count")
+      .addSelect("AVG(employee.salary)", "averageSalary")
+      .addSelect("SUM(employee.salary)", "totalSalary")
+      .groupBy("employee.country")
+      .orderBy("count", "DESC")
+      .getRawMany();
+
+    const byDepartmentRaw = await this.repository
+      .createQueryBuilder("employee")
+      .select("employee.department", "department")
+      .addSelect("COUNT(employee.id)", "count")
+      .addSelect("AVG(employee.salary)", "averageSalary")
+      .addSelect("SUM(employee.salary)", "totalSalary")
+      .groupBy("employee.department")
+      .orderBy("count", "DESC")
+      .getRawMany();
+
+    const topEarners = await this.repository.find({
+      order: { salary: "DESC" },
+      take: 5,
+    });
+
+    return {
+      totalEmployees,
+      activeEmployees,
+      inactiveEmployees,
+      totalPayroll: Number(statsRaw.total ?? 0),
+      salaryStats: {
+        average: Number(statsRaw.average ?? 0),
+        median: Number(statsRaw.median ?? 0),
+        min: Number(statsRaw.min ?? 0),
+        max: Number(statsRaw.max ?? 0),
+        total: Number(statsRaw.total ?? 0),
+        count: Number(statsRaw.count ?? 0),
+      },
+      byCountry: byCountryRaw.map((row) => ({
+        country: row.country,
+        count: Number(row.count),
+        averageSalary: Number(row.averageSalary),
+        totalSalary: Number(row.totalSalary),
+      })),
+      byDepartment: byDepartmentRaw.map((row) => ({
+        department: row.department,
+        count: Number(row.count),
+        averageSalary: Number(row.averageSalary),
+        totalSalary: Number(row.totalSalary),
+      })),
+      topEarners,
+    };
+  }
 }

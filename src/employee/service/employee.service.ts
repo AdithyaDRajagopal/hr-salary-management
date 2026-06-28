@@ -3,6 +3,7 @@ import { EmployeeRepository } from "../repository/employee.repository";
 import { Employee } from "../entity/employee.entity";
 import {
   CreateEmployeeInput,
+  DashboardData,
   UpdateEmployeeInput,
   EmployeeFilterInput,
   GetAllEmployeesResponse,
@@ -62,5 +63,9 @@ export class EmployeeService {
 
   async deleteEmployee(id: string): Promise<Employee> {
     return this.updateEmployee(id, { isActive: false });
+  }
+
+  async getDashboard(): Promise<DashboardData> {
+    return this.employeeRepository.getDashboardData();
   }
 }

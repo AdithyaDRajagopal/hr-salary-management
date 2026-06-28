@@ -122,3 +122,105 @@ export class EmployeeFilterInput {
   @Field({ nullable: true })
   search?: string;
 }
+
+@ObjectType()
+export class SalaryStats {
+  @Field(() => Number)
+  average: number;
+
+  @Field(() => Number)
+  median: number;
+
+  @Field(() => Number)
+  min: number;
+
+  @Field(() => Number)
+  max: number;
+
+  @Field(() => Number)
+  total: number;
+
+  @Field(() => Number)
+  count: number;
+}
+
+@ObjectType()
+export class CountryBreakdown {
+  @Field()
+  country: string;
+
+  @Field(() => Number)
+  count: number;
+
+  @Field(() => Number)
+  averageSalary: number;
+
+  @Field(() => Number)
+  totalSalary: number;
+}
+
+@ObjectType()
+export class DepartmentBreakdown {
+  @Field()
+  department: string;
+
+  @Field(() => Number)
+  count: number;
+
+  @Field(() => Number)
+  averageSalary: number;
+
+  @Field(() => Number)
+  totalSalary: number;
+}
+
+@ObjectType()
+export class TopEarner {
+  @Field(() => ID)
+  id: string;
+
+  @Field()
+  firstName: string;
+
+  @Field()
+  lastName: string;
+
+  @Field()
+  department: string;
+
+  @Field()
+  country: string;
+
+  @Field(() => Number)
+  salary: number;
+
+  @Field()
+  currency: string;
+}
+
+@ObjectType()
+export class DashboardData {
+  @Field(() => Number)
+  totalEmployees: number;
+
+  @Field(() => Number)
+  activeEmployees: number;
+
+  @Field(() => Number)
+  inactiveEmployees: number;
+
+  @Field(() => Number)
+  totalPayroll: number;
+
+  @Field(() => SalaryStats)
+  salaryStats: SalaryStats;
+
+  @Field(() => [CountryBreakdown])
+  byCountry: CountryBreakdown[];
+
+  @Field(() => [DepartmentBreakdown])
+  byDepartment: DepartmentBreakdown[];
+
+  @Field(() => [TopEarner])
+  topEarners: TopEarner[];
+}
