@@ -1,4 +1,4 @@
-import { Field, ID, InputType, ObjectType } from '@nestjs/graphql';
+import { Field, ID, InputType, ObjectType } from "@nestjs/graphql";
 
 @ObjectType()
 export class Employee {
@@ -31,6 +31,18 @@ export class Employee {
 
   @Field(() => Boolean)
   isActive: boolean;
+
+  @Field()
+  createdAt: Date;
+
+  @Field()
+  updatedAt: Date;
+}
+
+@ObjectType()
+export class GetAllEmployeesResponse {
+  @Field(() => [Employee])
+  data: Employee[];
 }
 
 @InputType()

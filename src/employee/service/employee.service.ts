@@ -1,15 +1,24 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { EmployeeRepository } from '../repository/employee.repository';
-import { Employee } from '../entity/employee.entity';
-import { CreateEmployeeInput, UpdateEmployeeInput, EmployeeFilterInput } from '../dto/employee.dto';
-import { PaginationInput } from '../../common/dto/common.dto';
+import { Injectable, NotFoundException } from "@nestjs/common";
+import { EmployeeRepository } from "../repository/employee.repository";
+import { Employee } from "../entity/employee.entity";
+import {
+  CreateEmployeeInput,
+  UpdateEmployeeInput,
+  EmployeeFilterInput,
+  GetAllEmployeesResponse,
+} from "../dto/employee.dto";
+import { PaginationInput } from "../../common/dto/common.dto";
 
 @Injectable()
 export class EmployeeService {
   constructor(private readonly employeeRepository: EmployeeRepository) {}
 
-  async getAllEmployees(filter?: EmployeeFilterInput, pagination?: PaginationInput): Promise<Employee[]> {
-    return this.employeeRepository.findAll(filter, pagination);
+  async getAllEmployees(
+    filter?: EmployeeFilterInput,
+    pagination?: PaginationInput,
+  ): Promise<GetAllEmployeesResponse> {
+    const data = await this.employeeRepository.findAll(filter, pagination);
+    return { data };
   }
 
   async findOne(id: string): Promise<Employee> {
@@ -36,7 +45,10 @@ export class EmployeeService {
     });
   }
 
-  async updateEmployee(id: string, input: UpdateEmployeeInput): Promise<Employee> {
+  async updateEmployee(
+    id: string,
+    input: UpdateEmployeeInput,
+  ): Promise<Employee> {
     await this.findOne(id);
     const updated = await this.employeeRepository.update(id, input);
     if (!updated) {
