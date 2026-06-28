@@ -1,9 +1,9 @@
-import { Repository } from 'typeorm';
-import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Employee } from '../entity/employee.entity';
-import { EmployeeFilterInput } from '../dto/employee.dto';
-import { PaginationInput } from '../../common/dto/common.dto';
+import { Repository } from "typeorm";
+import { Injectable } from "@nestjs/common";
+import { InjectRepository } from "@nestjs/typeorm";
+import { Employee } from "../entity/employee.entity";
+import { EmployeeFilterInput } from "../dto/employee.dto";
+import { PaginationInput } from "../../common/dto/common.dto";
 
 @Injectable()
 export class EmployeeRepository {
@@ -12,17 +12,21 @@ export class EmployeeRepository {
     private readonly repository: Repository<Employee>,
   ) {}
 
-  findAll(filter?: EmployeeFilterInput, pagination?: PaginationInput): Promise<Employee[]> {
-    const query = this.repository.createQueryBuilder('employee')
-      .orderBy('employee.createdAt', 'DESC');
+  findAll(
+    filter?: EmployeeFilterInput,
+    pagination?: PaginationInput,
+  ): Promise<Employee[]> {
+    const query = this.repository
+      .createQueryBuilder("employee")
+      .orderBy("employee.createdAt", "DESC");
 
     if (filter) {
       const { country, department } = filter;
       if (country) {
-        query.andWhere('employee.country = :country', { country });
+        query.andWhere("employee.country = :country", { country });
       }
       if (department) {
-        query.andWhere('employee.department = :department', { department });
+        query.andWhere("employee.department = :department", { department });
       }
     }
 
@@ -41,7 +45,10 @@ export class EmployeeRepository {
     return this.repository.save(newEmployee);
   }
 
-  async update(id: string, employee: Partial<Employee>): Promise<Employee | null> {
+  async update(
+    id: string,
+    employee: Partial<Employee>,
+  ): Promise<Employee | null> {
     await this.repository.update(id, employee);
     return this.findById(id);
   }

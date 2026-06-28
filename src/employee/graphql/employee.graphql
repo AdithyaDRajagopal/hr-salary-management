@@ -39,10 +39,17 @@ input UpdateEmployeeInput {
     currency: String
     startDate: String
     isActive: Boolean
+    createdAt: Date
+    updatedAt: Date
+}
+
+type GetAllEmployeesResponse {
+    data: [Employee]
+    totalCount: Int
 }
 
 type Query {
-    getAllEmployees(filter: EmployeeFilter, pagination: PaginationInput): [Employee]
+    getAllEmployees(filter: EmployeeFilter, pagination: PaginationInput): GetAllEmployeesResponse
     getEmployeeById(id: ID!): Employee
 }
 
